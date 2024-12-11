@@ -1,0 +1,17 @@
+dilemmaer:
+sandbox/simulator(?)
+	sandbox
+		pro
+			simplere at lave
+			simplere at forstå
+		con
+			dårligt loop
+			intet "pling"
+	simulator
+		pro
+			nemt loop og pling
+			mere mål i spillet
+		con
+			kræver længere tid ([L] kan godt selv bruge fritid hvis nødvendigt)
+noter:
+idéen
