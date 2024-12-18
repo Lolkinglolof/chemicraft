@@ -58,8 +58,14 @@ public class DragAndDrop : MonoBehaviour
             Vector3 screenBottomLeft = Camera.main.ViewportToWorldPoint(Vector3.zero);
             Vector3 screenTopRight = Camera.main.ViewportToWorldPoint(Vector3.one);
             // Begræns rotation speed når du smider objectet. 
+            // Tilføj spin afhængigt af musens retning
+            // Beregn spin med en simpel lineær afhængighed af throwVelocity.x
             float angularVelocity = throwVelocity.x * 4f;
-            dragRb.angularVelocity = angularVelocity;
+            // Finjuster spin ved at inkludere et krydsprodukt.
+            float spinAdjustment = Vector3.Cross(dragVelocity, Vector3.forward).z * 10f; // Mindre effekt
+            angularVelocity += spinAdjustment;
+            // Påfør spin og begrænsning
+            dragRb.angularVelocity = Mathf.Clamp(angularVelocity, -1000f, 1000f);
             //gør så at du ikke kan smide objectet igennem grænsen men dette forhænder ikke at objectet kan komme igennem grænsen. 
             throwVelocity.x = Mathf.Clamp(throwVelocity.x, screenBottomLeft.x - dragTarget.position.x, screenTopRight.x - dragTarget.position.x);
             throwVelocity.y = Mathf.Clamp(throwVelocity.y, screenBottomLeft.y - dragTarget.position.y, screenTopRight.y - dragTarget.position.y);
