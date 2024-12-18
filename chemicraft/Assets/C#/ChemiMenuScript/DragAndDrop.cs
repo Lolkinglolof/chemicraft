@@ -6,30 +6,35 @@ using UnityEngine.UI;
 
 
 
-public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class DragAndDrop : MonoBehaviour
 {
-    RectTransform rectTransform;
-    public Image Image;
+   
+    //public Image Image; // skal slettes... 
+    public GameObject potionObject;
+    public Color onBeingDragColor;
+    //MeshRenderer meshRenderer;
+    SpriteRenderer spriteRenderer;
+    public Color onEndDragColor;
+    Vector3 offset;
 
     // Start is called before the first frame update
     private void Start()
     {
-        rectTransform = GetComponent<RectTransform>(); 
-        Image = GetComponent<Image>();  
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    public void OnDrag(PointerEventData eventData)
+    private void OnMouseDown()
     {
-        rectTransform.anchoredPosition += eventData.delta;
-        //isDraging =false; 
+       
+        spriteRenderer.material.color = onEndDragColor; 
+        
+       
         transform.position = Input.mousePosition;
+        offset = this.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f));
     }
-    public void OnBeginDrag(PointerEventData eventData)
+    private void OnMouseDrag()
     {
-        Image.color = new Color32(250, 150, 160, 200);
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Image.color = new Color32(255, 255, 255, 255); // Default color
+        spriteRenderer.material.color = onBeingDragColor;
+        transform.position = Input.mousePosition;
+        this.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f));
     }
 }
